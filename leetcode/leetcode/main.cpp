@@ -11,9 +11,9 @@ int main()
     std::vector<int> numArr = { 2, 7, 11, 15 };
     int target = 9;
 
-    std::vector<int> idx = Solution::efficient_two_sum(numArr, target);
+    std::vector<int> numIndices = Solution::efficient_two_sum(numArr, target);
 
-    assert(numArr[idx[0]] + numArr[idx[1]] == target);
+    assert(numArr[numIndices[0]] + numArr[numIndices[1]] == target);
 
     assert(Solution::is_palindrome(23) == false);
     assert(Solution::is_palindrome(121) == true);
