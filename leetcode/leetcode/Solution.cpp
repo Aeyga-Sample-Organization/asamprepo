@@ -260,36 +260,41 @@ ListNode* Solution::merge_two_lists(ListNode* list1, ListNode* list2)
     {
         return list1;
     }
-
+    
+    ListNode* a = list1;
+    ListNode* b = list2;
     ListNode* ret = new ListNode();
-    ListNode* head = ret;
+    ListNode* tmp = ret;
 
-    while (list1 && list2)
+    while (a && b)
     {
-        if (list1->val <= list2->val)
+        if (a->val <= b->val)
         {
-            ret->next = new ListNode(list1->val);
-            list1 = list1->next;
+            ret->next = new ListNode(a->val);
+            a = a->next;
         }
         else
         {
-            ret->next = new ListNode(list2->val);
-            list2 = list2->next;
+            ret->next = new ListNode(b->val);
+            b = b->next;
         }
 
         ret = ret->next;
     }
 
-    if (list1 && !list2)
+    if (a && !b)
     {
-        ret->next = list1;
+        ret->next = a;
     }
-    else if (list2 && !list1)
+    else
     {
-        ret->next = list2;
+        ret->next = b;
     }
+    
+    ListNode* head = tmp->next;
+    delete tmp;
 
-    return head->next;
+    return head;
 }
 
 int Solution::find_needle(std::string haystack, std::string needle)

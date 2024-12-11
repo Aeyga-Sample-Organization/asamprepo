@@ -39,12 +39,16 @@ class GlobalFunctions
                 return;
             }
 
+            ListNode* temp = nullptr;
+
             while (node)
             {
-                ListNode* temp = node->next;
+                temp = node->next;
                 delete node;
                 node = temp;
             }
+
+            delete temp;
         }
 
         /// <summary>
