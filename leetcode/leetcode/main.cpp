@@ -4,34 +4,31 @@
 #include <unordered_map>
 #include "Solution.h"
 #include "ListNode.h"
-
-static void create_list(ListNode* node, int values[], int len);
-static bool validate_list_equivalence(ListNode* a, ListNode* b);
+#include "GlobalFunctions.h"
 
 int main()
 {
     std::vector<int> numArr = { 2, 7, 11, 15 };
     int target = 9;
 
-    Solution sol = Solution();
-    std::vector<int> idx = sol.efficient_two_sum(numArr, target);
+    std::vector<int> numIndices = Solution::efficient_two_sum(numArr, target);
 
-    assert(numArr[idx[0]] + numArr[idx[1]] == target);
+    assert(numArr[numIndices[0]] + numArr[numIndices[1]] == target);
 
-    assert(sol.is_palindrome(23) == false);
-    assert(sol.is_palindrome(121) == true);
+    assert(Solution::is_palindrome(23) == false);
+    assert(Solution::is_palindrome(121) == true);
 
-    assert(sol.romanToInt("III") == 3);
-    assert(sol.romanToInt("LVIII") == 58);
+    assert(Solution::roman_to_int("III") == 3);
+    assert(Solution::roman_to_int("LVIII") == 58);
 
     std::vector<std::string> strs = std::vector<std::string> { "flower", "flow", "flight" };
     std::vector<std::string> strs2 = std::vector<std::string>{ "dog","racecar","car" };
 
-    assert(sol.longestCommonPrefix(strs) == "fl");
-    assert(sol.longestCommonPrefix(strs2) == "");
+    assert(Solution::longest_common_prefix(strs) == "fl");
+    assert(Solution::longest_common_prefix(strs2) == "");
 
-    assert(sol.lcp_optimized(strs) == "fl");
-    assert(sol.lcp_optimized(strs2) == "");
+    assert(Solution::lcp_optimized(strs) == "fl");
+    assert(Solution::lcp_optimized(strs2) == "");
 
     ListNode* list1 = new ListNode();
     ListNode* list2 = new ListNode();
@@ -41,49 +38,19 @@ int main()
     int val2[] = { 1, 3, 4 };
     int val3[] = { 1, 1, 2, 3, 4, 4 };
 
-    create_list(list1, val1, 3);
-    create_list(list2, val2, 3);
-    create_list(ans, val3, 6);
+    GlobalFunctions::create_list(list1, val1, 3);
+    GlobalFunctions::create_list(list2, val2, 3);
+    GlobalFunctions::create_list(ans, val3, 6);
 
-    assert(validate_list_equivalence(sol.mergeTwoLists(list1, list2), ans));
+    assert(GlobalFunctions::validate_list_equivalence(Solution::merge_two_lists(list1, list2), ans));
 
-    delete list1;
-    delete list2;
+    GlobalFunctions::destroy_list(list1);
+    GlobalFunctions::destroy_list(list2);
+    GlobalFunctions::destroy_list(ans);
+
+    assert(Solution::find_needle("sadbutsad", "sad") == 0);
+    assert(Solution::find_needle("leetcode", "leeto") == -1);
+    assert(Solution::find_needle("hello", "ll") == 2);
 
     return 0;
-}
-
-static void create_list(ListNode* node, int values[], int len)
-{
-    for (int i = 0; i < len; i++)
-    {
-        node->val = values[i];
-
-        if (i != len - 1)
-        {
-            node->next = new ListNode();
-        }
-
-        node = node->next;
-    }
-}
-
-static bool validate_list_equivalence(ListNode* a, ListNode* b)
-{
-    if (!a || !b)
-    {
-        return false;
-    }
-
-    while (a && b)
-    {
-        if (a->val != b->val)
-        {
-            return false;
-        }
-        a = a->next;
-        b = b->next;
-    }
-
-    return true;
 }

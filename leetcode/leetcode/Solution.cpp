@@ -70,7 +70,7 @@ bool Solution::is_palindrome(int x)
     return false;
 }
 
-int Solution::romanToInt(std::string s)
+int Solution::roman_to_int(std::string s)
 {
     if (s.empty())
     {
@@ -149,7 +149,7 @@ int Solution::romanToInt(std::string s)
     return retVal;
 }
 
-std::string Solution::longestCommonPrefix(std::vector<std::string> &strs)
+std::string Solution::longest_common_prefix(std::vector<std::string> &strs)
 {
     std::string result = "";
 
@@ -245,7 +245,7 @@ std::string Solution::lcp_optimized(std::vector<std::string>& strs)
     return result;
 }
 
-ListNode* Solution::mergeTwoLists(ListNode* list1, ListNode* list2)
+ListNode* Solution::merge_two_lists(ListNode* list1, ListNode* list2)
 {
     // Validate inputs.
     if (!list1 && !list2)
@@ -260,34 +260,77 @@ ListNode* Solution::mergeTwoLists(ListNode* list1, ListNode* list2)
     {
         return list1;
     }
-
+    
+    ListNode* a = list1;
+    ListNode* b = list2;
     ListNode* ret = new ListNode();
-    ListNode* head = ret;
+    ListNode* tmp = ret;
 
-    while (list1 && list2)
+    while (a && b)
     {
-        if (list1->val <= list2->val)
+        if (a->val <= b->val)
         {
-            ret->next = new ListNode(list1->val);
-            list1 = list1->next;
+            ret->next = new ListNode(a->val);
+            a = a->next;
         }
         else
         {
-            ret->next = new ListNode(list2->val);
-            list2 = list2->next;
+            ret->next = new ListNode(b->val);
+            b = b->next;
         }
 
         ret = ret->next;
     }
 
-    if (list1 && !list2)
+    if (a && !b)
     {
-        ret->next = list1;
+        ret->next = a;
     }
-    else if (list2 && !list1)
+    else
     {
-        ret->next = list2;
+        ret->next = b;
+    }
+    
+    ListNode* head = tmp->next;
+    delete tmp;
+
+    return head;
+}
+
+int Solution::find_needle(std::string haystack, std::string needle)
+{
+    // If either string is null or empty, return.
+    if (haystack.empty() || needle.empty())
+    {
+        return -1;
     }
 
-    return head->next;
+    for (int i = 0; i < haystack.size(); i++)
+    {
+        // If we ever find a match with the first character of needle, keep checking for matching letters.
+        if (haystack[i] == needle[0])
+        {
+            // Check i + 1 since we already verified the ith character.
+            int j = i + 1;
+
+            while (haystack[j] == needle[j - i] && (j - i) < needle.size() && j < haystack.size())
+            {
+                // So long as we keep seeing matching letters and we haven't reached the end of needle, keep incrementing.
+                j++;
+            }
+
+            // If j ever equals the size of needle, it means all characters match. Return i: the index of the first occurence of needle.
+            if ((j - i) == needle.size())
+            {
+                return i;
+            }
+            else
+            {
+                // Continue iterating. j will reset next iteration.
+                continue;
+            }
+        }
+    }
+
+    return -1;
 }
