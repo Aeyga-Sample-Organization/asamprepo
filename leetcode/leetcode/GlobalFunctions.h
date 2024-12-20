@@ -76,4 +76,25 @@ class GlobalFunctions
 
             return true;
         }
+
+        static bool validate_vector_equivalence(std::vector<int>& a, std::vector<int>& b)
+        {
+            if (a.size() != b.size())
+            {
+                return false;
+            }
+
+            // Both vectors have the same size so it doesn't matter which one we choose for this.
+            int size = a.size();
+
+            for (int i = 0; i < size; i++)
+            {
+                if (a[i] != b[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 };

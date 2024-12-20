@@ -52,5 +52,16 @@ int main()
     assert(Solution::find_needle("leetcode", "leeto") == -1);
     assert(Solution::find_needle("hello", "ll") == 2);
 
+    std::vector<int> nums = {0 ,0, 1, 1, 1, 2, 2, 3, 3, 4};
+    assert(Solution::remove_duplicates(nums) == 5);
+
+    // nums = { 0, 1, 2, 2, 3, 0, 4, 2};
+    // assert(Solution::remove_element(nums, 2) == 5);
+
+    nums = { 1, 3, -1, -3, 5, 3, 6, 7 };
+    std::vector<int> numsResult = Solution::sliding_window_max(nums, 3);
+    std::vector<int> maxSlidingWindowAnswer = { 3, 3, 5, 5, 6, 7 };
+    assert(GlobalFunctions::validate_vector_equivalence(numsResult, maxSlidingWindowAnswer));
+
     return 0;
 }

@@ -72,6 +72,29 @@ static class Solution
         /// <param name="needle">: The target string to search for.</param>
         /// <returns>The index of the first occurence. Returns -1 if it doesn't exist in haystack</returns>
         static int find_needle(std::string haystack, std::string needle);
+
+        /// <summary>
+        /// Removes duplicates from a sorted vector in-place and returns the new length.
+        /// </summary>
+        /// <param name="nums">: A sorted vector of integers.</param>
+        /// <returns>The length of the vector after removing duplicates.</returns>
+        static int remove_duplicates(std::vector<int>& nums);
+
+        /// <summary>
+        /// Removes all instances of a specific value from a vector in-place and returns the new length.
+        /// </summary>
+        /// <param name="nums">: A vector of integers.</param>
+        /// <param name="val">: The value to remove from the vector.</param>
+        /// <returns>The length of the vector after removing the specified value.</returns>
+        static int remove_element(std::vector<int>& nums, int val);
+
+        /// <summary>
+        /// Finds the maximum value in each sliding window of size k in the given vector.
+        /// </summary>
+        /// <param name="nums">: A vector of integers.</param>
+        /// <param name="k">: The size of the sliding window.</param>
+        /// <returns>A vector containing the maximum value in each sliding window.</returns>
+        static std::vector<int> sliding_window_max(std::vector<int>& nums, int k);
 };
 #endif
 

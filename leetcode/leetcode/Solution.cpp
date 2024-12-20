@@ -1,5 +1,6 @@
 #include "Solution.h"
 #include "ListNode.h"
+#include <algorithm>
 #include <unordered_map>
 #include <string>
 
@@ -305,7 +306,10 @@ int Solution::find_needle(std::string haystack, std::string needle)
         return -1;
     }
 
-    for (int i = 0; i < haystack.size(); i++)
+    int hlen = haystack.size();
+    int nlen = needle.size();
+
+    for (int i = 0; i < hlen; i++)
     {
         // If we ever find a match with the first character of needle, keep checking for matching letters.
         if (haystack[i] == needle[0])
@@ -313,14 +317,14 @@ int Solution::find_needle(std::string haystack, std::string needle)
             // Check i + 1 since we already verified the ith character.
             int j = i + 1;
 
-            while (haystack[j] == needle[j - i] && (j - i) < needle.size() && j < haystack.size())
+            while (haystack[j] == needle[j - i] && (j - i) < nlen && j < hlen)
             {
                 // So long as we keep seeing matching letters and we haven't reached the end of needle, keep incrementing.
                 j++;
             }
 
             // If j ever equals the size of needle, it means all characters match. Return i: the index of the first occurence of needle.
-            if ((j - i) == needle.size())
+            if ((j - i) == nlen)
             {
                 return i;
             }
@@ -333,4 +337,94 @@ int Solution::find_needle(std::string haystack, std::string needle)
     }
 
     return -1;
+}
+
+int Solution::remove_duplicates(std::vector<int>& nums)
+{
+    if (nums.empty())
+    {
+        return -1;
+    }
+
+    if (nums.size() == 1)
+    {
+        return 1;
+    }
+
+    int r = 0;
+    int l = 1;
+
+    for (l; l < nums.size(); l++)
+    {
+        if (nums[r] != nums[l])
+        {
+            r++;
+            nums[r] = nums[l];
+            continue;
+        }
+    }
+
+    return r + 1;
+}
+
+int Solution::remove_element(std::vector<int>& nums, const int val)
+{
+    if (nums.empty())
+    {
+        return -1;
+    }
+
+    if (nums.size() == 1)
+    {
+        return 1;
+    }
+
+    int r = 0;
+    int l = 0;
+
+    for (r; r < nums.size(); r++)
+    {
+        if (nums[r] == val)
+        {
+            for (l = r + 1; l < nums.size(); l++)
+            {
+                if (nums[l] != val)
+                {
+                    nums[l] = nums[r];
+                    break;
+                }
+
+                if (l == nums.size() - 1)
+                {
+                    return r + 1;
+                }
+            }
+        }
+    }
+
+    return r + 1;
+}
+
+std::vector<int> Solution::sliding_window_max(std::vector<int>& nums, int k)
+{
+    std::vector<int> maximumValues = std::vector<int>();
+    
+    for (int i = 0; i < nums.size(); i++)
+    {
+        if ((k + i) > nums.size())
+        {
+            break;
+        }
+        
+        int maximumVal = 0;
+        
+        for (int j = i; j < (k + i); j++)
+        {
+            maximumVal = std::max(nums[j], maximumVal);
+        }
+
+        maximumValues.push_back(maximumVal);
+    }
+
+    return maximumValues;
 }
